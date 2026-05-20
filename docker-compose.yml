@@ -1,0 +1,20 @@
+services:
+  php:
+    build: .
+    command: sh -c "composer install && php -S 0.0.0.0:8080 index.php"
+    ports:
+      - "8080:8080"
+    working_dir: /app
+    env_file:
+      - .env
+    volumes:
+      - ./:/app
+
+  node:
+    image: node:lts
+    command: sh -c "npm install && node --watch --import ./instrument.js index.js"
+    working_dir: /app
+    env_file:
+      - .env
+    volumes:
+      - ./:/app
